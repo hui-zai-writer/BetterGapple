@@ -94,14 +94,14 @@ public class OnEatGoldenApple implements Listener {
             } else {
                 final_regeneration = new PotionEffect(PotionEffectType.REGENERATION,
                         player_regen.getDuration() + regeneration.getDuration(),
-                        player_regen.getAmplifier() + regeneration.getAmplifier());
+                        Math.min(player_regen.getAmplifier(),regeneration.getAmplifier()));
             }
             if (player_absorption == null){
                 final_absorption = absorption;
             } else {
                 final_absorption = new PotionEffect(PotionEffectType.ABSORPTION,
                         player_absorption.getDuration() + absorption.getDuration(),
-                        player_absorption.getAmplifier() + absorption.getAmplifier());
+                        Math.min(player_absorption.getAmplifier(),absorption.getAmplifier()));
             }
             int i = 0;
             while (!evt.getPlayer().addPotionEffect(final_regeneration) && i <= 5){
