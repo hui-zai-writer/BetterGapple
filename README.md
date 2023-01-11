@@ -1,6 +1,6 @@
 # BetterGapple
 
-***WARNING: THIS README IS OUTDATED, UPDATE WILL COMING SOON***
+# ***WARNING: THIS README IS OUTDATED, UPDATE WILL COMING SOON***
 
 **A plugin provides better golden apple for UHC (Part of source code from https://github.com/HuashuiZhuanyong/Golden_apple_Extra)**
 
