@@ -1,6 +1,7 @@
 package com.thunderstudio;
 
 import org.bukkit.Bukkit;
+import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public final class BetterGoldenApple extends JavaPlugin {
@@ -10,11 +11,13 @@ public final class BetterGoldenApple extends JavaPlugin {
         // Plugin startup logic
         getLogger().info("BetterGapple is loading...");
         saveDefaultConfig();
-        Bukkit.getPluginManager().registerEvents(new OnEatGoldenApple(),this);
+        FileConfiguration c = getConfig();
+        Bukkit.getPluginManager().registerEvents(new OnEatGoldenApple(c),this);
     }
 
     @Override
     public void onDisable() {
         // Plugin shutdown logic
+        getLogger().info("BetterGapple Unloaded");
     }
 }

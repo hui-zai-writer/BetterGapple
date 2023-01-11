@@ -16,12 +16,11 @@ import java.util.Collection;
 public class OnEatGoldenApple implements Listener {
 
     //Config Variables
-    private FileConfiguration config = Bukkit.spigot().getConfig(); //File Config variable
     private PotionEffect regeneration,absorption;
     // After loading configure, Pot effects will save here.
 
     //Load Configures
-    private Boolean LoadConfig() {
+    private Boolean LoadConfig(FileConfiguration config) {
         // Absorption Level
         int absorption_lvl;
         // Regeneration Time
@@ -57,19 +56,18 @@ public class OnEatGoldenApple implements Listener {
     }
 
     // Constructor Method
-    public OnEatGoldenApple(){
+    public OnEatGoldenApple(FileConfiguration c){
         Bukkit.getLogger().info("Registering Event...");
         Bukkit.getLogger().info("Getting Configure...");
-        Boolean flag = LoadConfig(); // Load Configs
+        Boolean flag = LoadConfig(c); // Load Configs
         if (!flag){
             Bukkit.getLogger().warning("Event Listener Constructing failed.");
         }
     }
 
-    private void ReloadConfig(){
+    private Boolean ReloadConfig(FileConfiguration config){
         Bukkit.getLogger().info("Reloading configure...");
-        config = Bukkit.spigot().getConfig();
-        LoadConfig();
+        return LoadConfig(config);
     }
 
     @EventHandler
