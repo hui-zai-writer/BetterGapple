@@ -1,0 +1,13 @@
+#######################
+#     Config v0.4     #
+#   Coded by hui_cat  #
+#######################
+
+GoldenApple:
+  regeneration:
+    time : 5
+    amplifier : 3
+
+  absorption:
+    time : 120
+    amplifier : 3
