@@ -33,10 +33,10 @@ public class OnEatGoldenApple implements Listener {
             ConfigurationSection regen_c = config.getConfigurationSection("GoldenApple.regeneration");
             ConfigurationSection absorption_c = config.getConfigurationSection("GoldenApple.absorption");
             assert regen_c != null;
-            regen_t = regen_c.getInt("time");
+            regen_t = (20 * regen_c.getInt("time"));
             regen_lvl = regen_c.getInt("amplifier");
             assert absorption_c != null;
-            absorption_t = absorption_c.getInt("time");
+            absorption_t = (20 * absorption_c.getInt("time"));
             absorption_lvl = absorption_c.getInt("amplifier");
         } catch (Exception e){
             e.printStackTrace();
