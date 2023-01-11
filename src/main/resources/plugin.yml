@@ -1,0 +1,7 @@
+name: BetterGoldenApple
+version: '${project.version}'
+main: com.thunderstudio.BetterGoldenApple
+api-version: 1.18
+prefix: BetterGapple
+authors: [ ydy_dreemurr, hui_cat ]
+description: A plugin provides better golden apple for UHC
