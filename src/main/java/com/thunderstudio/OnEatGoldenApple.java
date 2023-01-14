@@ -11,6 +11,7 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
+import java.security.SecureRandom;
 import java.util.Collection;
 
 public class OnEatGoldenApple implements Listener {
@@ -55,6 +56,15 @@ public class OnEatGoldenApple implements Listener {
         return true;
     }
 
+    // Pot Calc duration
+    private int DurationCalc(int duration_1,int amplifier_1,int duration_2,int amplifier_2){
+        double rate_between = amplifier_1 > amplifier_2 ? 1 + (amplifier_1 - 1) * 0.5 :
+                1 + (amplifier_2 - 1) * 0.5;
+        SecureRandom number_noise = new SecureRandom();
+        return (int) (amplifier_1 > amplifier_2 ? (duration_2 / rate_between + duration_1) - number_noise.nextDouble() * 2:
+                (duration_1 / rate_between + duration_2) - number_noise.nextDouble() * 2);
+    }
+
     // Constructor Method
     public OnEatGoldenApple(FileConfiguration c){
         Bukkit.getLogger().info("Registering Event...");
@@ -93,15 +103,15 @@ public class OnEatGoldenApple implements Listener {
                 final_regeneration = regeneration;
             } else {
                 final_regeneration = new PotionEffect(PotionEffectType.REGENERATION,
-                        player_regen.getDuration() + regeneration.getDuration(),
-                        Math.min(player_regen.getAmplifier(),regeneration.getAmplifier()));
+                        DurationCalc(regeneration.getDuration(), regeneration.getAmplifier(), player_regen.getDuration(), player_regen.getAmplifier()),
+                        Math.max(player_regen.getAmplifier(),regeneration.getAmplifier()));
             }
             if (player_absorption == null){
                 final_absorption = absorption;
             } else {
                 final_absorption = new PotionEffect(PotionEffectType.ABSORPTION,
-                        player_absorption.getDuration() + absorption.getDuration(),
-                        Math.min(player_absorption.getAmplifier(),absorption.getAmplifier()));
+                        DurationCalc(absorption.getDuration(), absorption.getAmplifier(), player_absorption.getDuration(), player_absorption.getAmplifier()),
+                        Math.max(player_absorption.getAmplifier(),absorption.getAmplifier()));
             }
             int i = 0;
             while (!evt.getPlayer().addPotionEffect(final_regeneration) && i <= 5){
