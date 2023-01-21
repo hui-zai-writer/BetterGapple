@@ -11,8 +11,6 @@ import org.bukkit.event.player.PlayerItemConsumeEvent;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-import java.util.Collection;
-
 public class OnEatGoldenApple implements Listener {
 
     //Config Variables
@@ -55,6 +53,15 @@ public class OnEatGoldenApple implements Listener {
         return true;
     }
 
+    //TODO: Fix Code of duration calculation
+    // Pot Calc duration
+    /*private int DurationCalc(int duration_1,int amplifier_1,int duration_2,int amplifier_2){
+        double rate_between = amplifier_1 > amplifier_2 ? 1 + (amplifier_1 - 1) * 0.5 :
+                1 + (amplifier_2 - 1) * 0.5;
+        return (int) (amplifier_1 > amplifier_2 ? (duration_2 / rate_between + duration_1):
+                (duration_1 / rate_between + duration_2));
+    }*/
+
     // Constructor Method
     public OnEatGoldenApple(FileConfiguration c){
         Bukkit.getLogger().info("Registering Event...");
@@ -65,9 +72,10 @@ public class OnEatGoldenApple implements Listener {
         }
     }
 
-    private Boolean ReloadConfig(FileConfiguration config){
+    @EventHandler
+    private Boolean ReloadConfig(ConfigChangeEvent evt){
         Bukkit.getLogger().info("Reloading configure...");
-        return LoadConfig(config);
+        return LoadConfig(evt.getEvtConfig());
     }
 
     @EventHandler
@@ -76,39 +84,12 @@ public class OnEatGoldenApple implements Listener {
             return;
 
         if (evt.getItem().getType() == Material.GOLDEN_APPLE){
-            Collection<PotionEffect> pots = evt.getPlayer().getActivePotionEffects();
-            PotionEffect player_regen = null;
-            PotionEffect player_absorption = null;
-            PotionEffect final_regeneration;
-            PotionEffect final_absorption;
-            for (PotionEffect pot: pots
-                 ) {
-                if (pot.getType() == PotionEffectType.REGENERATION){
-                    player_regen = pot;
-                } else if (pot.getType() == PotionEffectType.ABSORPTION) {
-                    player_absorption = pot;
-                }
-            }
-            if (player_regen == null){
-                final_regeneration = regeneration;
-            } else {
-                final_regeneration = new PotionEffect(PotionEffectType.REGENERATION,
-                        player_regen.getDuration() + regeneration.getDuration(),
-                        Math.min(player_regen.getAmplifier(),regeneration.getAmplifier()));
-            }
-            if (player_absorption == null){
-                final_absorption = absorption;
-            } else {
-                final_absorption = new PotionEffect(PotionEffectType.ABSORPTION,
-                        player_absorption.getDuration() + absorption.getDuration(),
-                        Math.min(player_absorption.getAmplifier(),absorption.getAmplifier()));
-            }
             int i = 0;
-            while (!evt.getPlayer().addPotionEffect(final_regeneration) && i <= 5){
+            while (!evt.getPlayer().addPotionEffect(regeneration) && i <= 5){
                 i++;
             }
             i = 0;
-            while (!evt.getPlayer().addPotionEffect(final_absorption) && i <= 5){
+            while (!evt.getPlayer().addPotionEffect(absorption) && i <= 5){
                 i++;
             }
         }
